@@ -1,0 +1,54 @@
+
+select, option { width: 100%; height:6%; }
+
+
+.cal-background{
+	
+	background:linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50));
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	
+}
+
+.cal-background{
+	
+	background:linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50));
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	
+}
+
+.font-white{
+	color: #fff;
+}
+
+.font-black{
+	color: #fff;
+}
+
+.backgrond-white{
+	background: white;
+}
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+}
