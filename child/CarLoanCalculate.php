@@ -10,23 +10,24 @@ class CarLoanCalculate extends LoanCalculate{
 		$interestRateYear = $this->interestRateYear;		
 		$interestSum = 0;
 		$remainingAmount = $amount;
-		$interestRate = $interestRateYear / 12 ; 
+		$amountOfMonth = LoanCalculate::AMOUNT_OF_MONTH;
+		$interestRate = $interestRateYear / $amountOfMonth ; 
 		
 		// Init Table
 		include('../init_table.php');		
 		
 		for ($x = 1; $x <= $period; $x++) {
 						
-			if($x % 12 == 0 && $x <=24 && $floatRated == 1){
-				$interestRateYear = $interestRateYear + 0.01;
-				$interestRate = $interestRateYear / 12 ; 
+			if($x % $amountOfMonth == 0 && $x <=$amountOfMonth && $floatRated == 1){
+				$interestRateYear = $interestRateYear + $this->floatingRate;
+				$interestRate = $interestRateYear / $amountOfMonth ; 
 			}
 			
 			// Calculate Payment Montyly
 			$monthlyPayment = parent::monthlyPaymentMorgateCalculate($amount,$interestRate,$period);
 
 			// Calculate Principal Interest By Effective Rate
-			$interestmonthly = $remainingAmount * $interestRateYear / 12;
+			$interestmonthly = $remainingAmount * $interestRateYear / $amountOfMonth;
 			$interestSum = $interestSum + $interestmonthly;
 			$principal   = $monthlyPayment - $interestmonthly;
 			$remainingAmount = $remainingAmount - $principal;

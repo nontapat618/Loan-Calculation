@@ -2,6 +2,8 @@
 
 abstract class LoanCalculate{
 	protected $interestRateYear = 0.035;
+	protected $floatingRate = 0.01;
+	const AMOUNT_OF_MONTH = 12;
 	abstract function calculatePaymentMonthly();
 
 	protected function toDecimalPlace($number=""){
