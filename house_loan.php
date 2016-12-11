@@ -9,7 +9,9 @@
 			   data: { action:'calculatePaymentMonthly',
 					   amount : $("#amount").val(),
 					   period : $('#period').val(),
-					   payback : $('#payback option:selected').val()
+					   payback : $('#payback option:selected').val(),
+					   isFloatRated : $('#floatRate:checked').val()					   
+					   
 					 },
 			   
 			   success:function(data) {
@@ -32,8 +34,12 @@
 <div class="container">
 	<div class="col-md-12">
 		<h4 align="center" class="font-white">House</h4>
+		<label style="position:relative;top:-25px;" class="font-white pull-right"><input id="floatRate" type="checkbox" value="checked"><b>Float Rate</b></label>
+
 	</div>
 
+	
+	
 	<div class="col-md-12" style="height:100px;"></div>
 	
 	<div class= "col-md-4">
@@ -56,10 +62,12 @@
 			  <option>Yearly</option>
 			</select>
 		</div>
-	</div>	
+	</div>
+	
 	<div class="col-md-4 col-md-offset-4">
 		<button type="button" class="btn btn-default" style="width:100%; background:#eee;" onclick="houseCalculatePayment()">Calculate</button>
 	</div>
+	
 	
 <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="vertical-alignment-helper">

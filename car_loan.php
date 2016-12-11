@@ -9,7 +9,8 @@
 			   data: { action:'calculatePaymentMonthly',
 					   amount : $("#amount").val(),
 					   period : $('#period').val(),
-					   payback : $('#payback option:selected').val()
+					   payback : $('#payback option:selected').val(),
+					   isFloatRated : $('#floatRate:checked').val()	
 					 },
 			   
 			   success:function(data) {
@@ -33,6 +34,7 @@
 	
 	<div class="col-md-12">
 		<h4 align="center" class="font-white">Car</h4>
+		<label style="position:relative;top:-25px;" class="font-white pull-right"><input id="floatRate" type="checkbox" value="checked"><b>Float Rate</b></label>		
 	</div>
 
 	<div class="col-md-12" style="height:100px;"></div>

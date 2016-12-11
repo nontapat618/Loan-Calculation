@@ -2,42 +2,52 @@
 
 include("../abstract/LoanCalculate.php");
 class HouseLoanCalculate extends LoanCalculate{
-	
-	private $amount;
-	private $interestRate;
-	private $period;
-	public  $monthlyPayment;
-	
-	public function calculatePaymentMonthly($amount="",$period=""){
-				
-		$interestRateYear = 0.035;
-		$interestRate = $interestRateYear / 12 ; 
-		$monthlyPayment = $amount * $interestRate * pow((1 + $interestRate),$period) / ( pow((1 + $interestRate),$period) - 1);
+			
+	public function calculatePaymentMonthly($amount="",$period="",$floatRated=""){
 		
+		// Init Value
+		$interestRateYear = $this->interestRateYear;		
 		$interestSum = 0;
 		$remainingAmount = $amount;
+		$interestRate = $interestRateYear / 12 ; 
 		
+		// Init Table
+		include('../init_table.php');		
 		
 		for ($x = 1; $x <= $period; $x++) {
+						
+			if($x % 12 == 0 && $x <=24 && $floatRated == 1){
+				$interestRateYear = $interestRateYear + 0.01;
+				$interestRate = $interestRateYear / 12 ; 
+			}
 			
-			$interestmonthly = $remainingAmount * $interestRateYear * 30 / 360;
+			// Calculate Payment Montyly
+			$monthlyPayment = parent::monthlyPaymentMorgateCalculate($amount,$interestRate,$period);
+
+			// Calculate Principal Interest By Effective Rate
+			$interestmonthly = $remainingAmount * $interestRateYear / 12;
 			$interestSum = $interestSum + $interestmonthly;
-			$diffmoney   = $monthlyPayment - $interestmonthly;
-			$remainingAmount = $remainingAmount - $diffmoney;
+			$principal   = $monthlyPayment - $interestmonthly;
+			$remainingAmount = $remainingAmount - $principal;
+
+			
+			// To Decimal Place
+			$principal =  parent::toDecimalPlace($principal);
+			$interestmonthly = parent::toDecimalPlace($interestmonthly);
+			$monthlyPayment = parent::toDecimalPlace($monthlyPayment);
+									
+			// Append Row In Table
+			include('../table_row.php');
+			
 			
 		}
 
-		$payment = array();
-		$payment['monthlyPayment'] = $monthlyPayment;
-		$payment['interestSum'] = $interestSum;
-		
-		$payment['monthlyPayment'] =  number_format((float)$payment['monthlyPayment'], 2, '.', '');
-		$payment['interestSum'] = number_format((float)$payment['interestSum'], 2, '.', '');
-		
-		echo "<b>Monthly Payment ".$payment['monthlyPayment']."</b><br/> <b>Total Interest ".$payment['interestSum']."</b>";
+		$interestSum = parent::toDecimalPlace($interestSum);		
+		echo "</table>";
+		echo "<b>Total Interest ".$interestSum."</b>";
 				
 	}
-	
+		
 }
 
 
@@ -57,9 +67,15 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
 		if($payback == "Yearly"){
 			$period = $period * 12;
 		}
-			
+
+		$floatRated = 0;
+		
+		if(isset($_POST['isFloatRated']) && !empty($_POST['isFloatRated'])){
+			$floatRated = 1;
+		}
+		
 		switch($action) {
-			case 'calculatePaymentMonthly' : $houseLoanCalculate->calculatePaymentMonthly($amount,$period); break;
+			case 'calculatePaymentMonthly' : $houseLoanCalculate->calculatePaymentMonthly($amount,$period,$floatRated); break;
 		}
 	
 	}
