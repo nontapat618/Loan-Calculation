@@ -4,7 +4,7 @@ include("../abstract/LoanCalculate.php");
 class CarLoanCalculate extends LoanCalculate{
 	
 	protected $interestRateYear = 0.01;
-	public function calculatePaymentMonthly($amount="",$period="",$floatRated=""){
+	public function calculatePaymentMonthly($amount="",$period="",$floatRatedChecked=""){
 		
 		// Init Value
 		$interestRateYear = $this->interestRateYear;		
@@ -18,7 +18,7 @@ class CarLoanCalculate extends LoanCalculate{
 		
 		for ($x = 1; $x <= $period; $x++) {
 						
-			if($x % $amountOfMonth == 0 && $x <=$amountOfMonth && $floatRated == 1){
+			if($x > 1 && $x % $amountOfMonth == 1 && $x <= $amountOfMonth * 3 && $floatRatedChecked == 1){
 				$interestRateYear = $interestRateYear + $this->floatingRate;
 				$interestRate = $interestRateYear / $amountOfMonth ; 
 			}
